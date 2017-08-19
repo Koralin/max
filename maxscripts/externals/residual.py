@@ -5,7 +5,7 @@ except:
 
 class residual(pyext._class):
 	# number of inlets and outlets
-	_inlets=7
+	_inlets=6
 	_outlets=1
 	
 	modulus=0
@@ -14,7 +14,6 @@ class residual(pyext._class):
 	start=0
 	end=0
 	
-	trans=0
 	sieve=[]
 	
 	def __init__(self,*args):
@@ -24,7 +23,7 @@ class residual(pyext._class):
 			offset=args[2]
 			start=args[3]
 			end=args[4]
-			trans=args[5]
+			populateSieve(this.modulus, this.offset, this.start, this.end)
 			
 	def bang_1(self):
 		self._outlet(1,self.sieve)
@@ -41,19 +40,16 @@ class residual(pyext._class):
 	def int_5(self,i):
 		self.end = i
 		
-	def int_6(self,i):
-		self.trans = i
+	def bang_6(self):
+		populateSieve(this.modulus, this.offset, this.start, this.end)
 		
-	def bang_7(self):
-		populateSieve(this.modulus, this.offset, this.start, this.end, this.trans)
-		
-	def populateSieve(m,o,s,e,t):
+	def populateSieve(m,o,s,e):
 		self.sieve = []
 		entry = s
 		index = 0
-		while (entry + o + t < e):
+		while (entry + o < e):
 			if entry % m == 0:
-				self.sieve.append(index, entry + o + t)
+				self.sieve.append(index, entry + o)
 				index += 1
 				entry += m 
 			else:
